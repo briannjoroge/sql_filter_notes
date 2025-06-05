@@ -65,7 +65,7 @@ The IN operator is a shorthand for multiple OR conditions.
 
 **Syntax:**
 ```sql
-SELECT column_name(s)
+SELECT *
 FROM table_name
 WHERE column_name IN (value1, value2, ...);
 ```
