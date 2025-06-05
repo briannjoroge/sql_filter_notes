@@ -19,33 +19,7 @@ Retrieves only employees who work in the HR department.
 
 ---
 
-### 2. AND – Combine multiple conditions  
-The AND operator requires all conditions to be true.
-
-**Syntax:**
-```sql
-SELECT * FROM employees
-WHERE department = 'Sales' AND salary > 50000;
-```
-
-Shows employees who are in Sales and earn more than 50,000.
-
----
-
-### 3. OR – One of the conditions must be true  
-The OR operator returns rows where at least one condition is true.
-
-**Example:**
-```sql
-SELECT * FROM employees
-WHERE department = 'HR' OR department = 'Finance';
-```
-
-Returns employees from either HR or Finance.
-
----
-
-### 4. LIMIT – Restrict the number of rows returned  
+### 2. LIMIT – Restrict the number of rows returned  
 Use LIMIT to control how many rows are returned.
 
 **Example:**
@@ -58,44 +32,33 @@ Shows only the first 5 employees.
 
 ---
 
-### 5. FETCH – Similar to LIMIT (PostgreSQL-style)  
-In PostgreSQL, FETCH is the SQL standard alternative to LIMIT.
+### 3. AND – Combine multiple conditions  
+The AND operator requires all conditions to be true.
 
-**Example:**
+**Syntax:**
 ```sql
 SELECT * FROM employees
-FETCH FIRST 5 ROWS ONLY;
+WHERE department = 'Sales' AND salary > 50000;
 ```
 
-Equivalent to LIMIT 5.
+Shows employees who are in Sales and earn more than 50,000.
 
 ---
 
-### 6. OFFSET – Skip rows  
-OFFSET lets you skip a specific number of rows before displaying results.
+### 4. OR – One of the conditions must be true  
+The OR operator returns rows where at least one condition is true.
 
 **Example:**
 ```sql
 SELECT * FROM employees
-OFFSET 5;
+WHERE department = 'HR' OR department = 'Finance';
 ```
 
-Skips the first 5 rows.
-
-**NOTE that:** You can combine OFFSET with LIMIT:
-
-**Example:**
-```sql
-SELECT * FROM employees
-OFFSET 5
-LIMIT 5;
-```
-
-Skips 5 rows, then returns the next 5.
+Returns employees from either HR or Finance.
 
 ---
 
-### 7. IN – Match against a list of values  
+### 5. IN – Match against a list of values  
 IN is used to filter rows where a column matches any value in a list.  
 The IN operator allows you to specify multiple values in a WHERE clause.  
 The IN operator is a shorthand for multiple OR conditions.
@@ -130,7 +93,7 @@ WHERE Country NOT IN ('Germany', 'France', 'UK');
 
 ---
 
-### 8. BETWEEN – Filter within a range  
+### 6. BETWEEN – Filter within a range  
 BETWEEN is used for filtering values between a specific range.  
 It is inclusive, meaning it includes both the lower and upper boundary values.  
 Works with numerical, date, and time values.
@@ -159,6 +122,44 @@ WHERE order_date BETWEEN '2023-01-01' AND '2023-12-31';
 Gets orders made in the year 2023.
 
 ---
+### 7. FETCH – Similar to LIMIT (PostgreSQL-style)  
+In PostgreSQL, FETCH is the SQL standard alternative to LIMIT.
+
+**Example:**
+```sql
+SELECT * FROM employees
+FETCH FIRST 5 ROWS ONLY;
+```
+
+Equivalent to LIMIT 5.
+
+---
+
+### 8. OFFSET – Skip rows  
+OFFSET lets you skip a specific number of rows before displaying results.
+
+**Example:**
+```sql
+SELECT * FROM employees
+OFFSET 5;
+```
+
+Skips the first 5 rows.
+
+**NOTE that:** You can combine OFFSET with LIMIT:
+
+**Example:**
+```sql
+SELECT * FROM employees
+OFFSET 5
+LIMIT 5;
+```
+
+Skips 5 rows, then returns the next 5.
+
+---
+
+
 
 ### Tip: Combine filters  
 You can mix them:
