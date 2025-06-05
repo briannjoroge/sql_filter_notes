@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter SQL Notes</title>
+</head>
+<body>
+    <h1 id="sql-filtering-commands">SQL Filtering Commands</h1>
+<h3 id="1-where-filter-rows-based-on-condition">1. WHERE – Filter rows based on condition</h3>
+<p>The WHERE clause is used to filter records that meet specific criteria.</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> table_name
+<span class="hljs-keyword">WHERE</span> condition;
+</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">WHERE</span> department = <span class="hljs-string">'HR'</span>;
+</code></pre>
+<p>Retrieves only employees who work in the HR department.</p>
+<hr>
+<h3 id="2-and-combine-multiple-conditions">2. AND – Combine multiple conditions</h3>
+<p>The AND operator requires all conditions to be true.</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">WHERE</span> department = <span class="hljs-string">'Sales'</span> <span class="hljs-keyword">AND</span> salary &gt; <span class="hljs-number">50000</span>;
+</code></pre>
+<p>Shows employees who are in Sales and earn more than 50,000.</p>
+<hr>
+<h3 id="3-or-one-of-the-conditions-must-be-true">3. OR – One of the conditions must be true</h3>
+<p>The OR operator returns rows where at least one condition is true.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">WHERE</span> department = <span class="hljs-string">'HR'</span> <span class="hljs-keyword">OR</span> department = <span class="hljs-string">'Finance'</span>;
+</code></pre>
+<p>Returns employees from either HR or Finance.</p>
+<hr>
+<h3 id="4-limit-restrict-the-number-of-rows-returned">4. LIMIT – Restrict the number of rows returned</h3>
+<p>Use LIMIT to control how many rows are returned.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">LIMIT</span> <span class="hljs-number">5</span>;
+</code></pre>
+<p>Shows only the first 5 employees.</p>
+<hr>
+<h3 id="5-fetch-similar-to-limit-postgresql-style-">5. FETCH – Similar to LIMIT (PostgreSQL-style)</h3>
+<p>In PostgreSQL, FETCH is the SQL standard alternative to LIMIT.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">FETCH</span> <span class="hljs-keyword">FIRST</span> <span class="hljs-number">5</span> <span class="hljs-keyword">ROWS</span> <span class="hljs-keyword">ONLY</span>;
+</code></pre>
+<p>Equivalent to LIMIT 5.</p>
+<hr>
+<h3 id="6-offset-skip-rows">6. OFFSET – Skip rows</h3>
+<p>OFFSET lets you skip a specific number of rows before displaying results.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">OFFSET</span> <span class="hljs-number">5</span>;
+</code></pre>
+<p>Skips the first 5 rows.</p>
+<p><strong>NOTE that:</strong> You can combine OFFSET with LIMIT:</p>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">OFFSET</span> <span class="hljs-number">5</span>
+<span class="hljs-keyword">LIMIT</span> <span class="hljs-number">5</span>;
+</code></pre>
+<p>Skips 5 rows, then returns the next 5.</p>
+<hr>
+<h3 id="7-in-match-against-a-list-of-values">7. IN – Match against a list of values</h3>
+<p>IN is used to filter rows where a column matches any value in a list.<br>The IN operator allows you to specify multiple values in a WHERE clause.<br>The IN operator is a shorthand for multiple OR conditions.</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> column_name(s)
+<span class="hljs-keyword">FROM</span> table_name
+<span class="hljs-keyword">WHERE</span> column_name <span class="hljs-keyword">IN</span> (value1, value2, ...);
+</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">WHERE</span> department <span class="hljs-keyword">IN</span> (<span class="hljs-string">'Sales'</span>, <span class="hljs-string">'HR'</span>, <span class="hljs-string">'IT'</span>);
+</code></pre>
+<p>Returns employees in Sales, HR, or IT departments.</p>
+<hr>
+<h4 id="not-in">NOT IN</h4>
+<p>By using the NOT keyword in front of the IN operator, you return all records that are NOT any of the values in the list.</p>
+<p><strong>Example</strong><br>Return all customers that are NOT from &#39;Germany&#39;, &#39;France&#39;, or &#39;UK&#39;:</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> Customers
+<span class="hljs-keyword">WHERE</span> Country <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">IN</span> (<span class="hljs-string">'Germany'</span>, <span class="hljs-string">'France'</span>, <span class="hljs-string">'UK'</span>);
+</code></pre>
+<hr>
+<h3 id="8-between-filter-within-a-range">8. BETWEEN – Filter within a range</h3>
+<p>BETWEEN is used for filtering values between a specific range.<br>It is inclusive, meaning it includes both the lower and upper boundary values.<br>Works with numerical, date, and time values.</p>
+<p><strong>Syntax:</strong></p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> *
+<span class="hljs-keyword">FROM</span> table_name
+<span class="hljs-keyword">WHERE</span> column_name <span class="hljs-keyword">BETWEEN</span> lower_value <span class="hljs-keyword">AND</span> upper_value;
+</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">WHERE</span> salary <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">30000</span> <span class="hljs-keyword">AND</span> <span class="hljs-number">60000</span>;
+</code></pre>
+<p>Finds employees earning between 30,000 and 60,000 (inclusive).</p>
+<p><strong>Using date example:</strong></p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> orders
+<span class="hljs-keyword">WHERE</span> order_date <span class="hljs-keyword">BETWEEN</span> <span class="hljs-string">'2023-01-01'</span> <span class="hljs-keyword">AND</span> <span class="hljs-string">'2023-12-31'</span>;
+</code></pre>
+<p>Gets orders made in the year 2023.</p>
+<hr>
+<h3 id="tip-combine-filters">Tip: Combine filters</h3>
+<p>You can mix them:</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">WHERE</span> department = <span class="hljs-string">'IT'</span>
+  <span class="hljs-keyword">AND</span> salary <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">40000</span> <span class="hljs-keyword">AND</span> <span class="hljs-number">70000</span>
+  <span class="hljs-keyword">AND</span> hire_date <span class="hljs-keyword">BETWEEN</span> <span class="hljs-string">'2020-01-01'</span> <span class="hljs-keyword">AND</span> <span class="hljs-string">'2022-12-31'</span>;
+</code></pre>
+
+</body>
+</html>
